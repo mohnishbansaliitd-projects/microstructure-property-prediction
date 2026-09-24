@@ -1,14 +1,9 @@
 """
-Loads the AlSi10Mg LPBF processing-structure-property dataset: the real
-Zenodo record "Processing, microstructure, and mechanical property dataset
-for AlSi10Mg fabricated by laser powder bed fusion additive manufacturing"
-(zenodo.org/records/10008435). The source data spans 60 processing
-parameter sets (the PSP feature table, one aggregated row per set) joined
-against the per-specimen mechanical property table (up to 3 tensile-test
-repeats per parameter set, some repeats untested/missing). After loading,
-this yields 177 real tested specimens (~3 repeats/set on average) across
-all 60 parameter sets. Falls back to a calibrated synthetic dataset if
-either source Excel file isn't available or its format doesn't match.
+Loads the AlSi10Mg LPBF processing-structure-property dataset from Zenodo
+(zenodo.org/records/10008435): 60 parameter sets from the PSP feature table,
+joined against per-specimen mechanical test repeats (up to 3 per set, some
+untested), yielding 177 tested specimens. Falls back to a calibrated
+synthetic dataset if the source Excel files aren't available or don't parse.
 """
 
 import os
