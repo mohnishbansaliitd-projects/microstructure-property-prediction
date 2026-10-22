@@ -31,7 +31,7 @@ def plot_leakage_parity_comparison(
     
     axes[0].set_xlabel("Measured Yield Strength [MPa]", fontsize=11)
     axes[0].set_ylabel("Predicted Yield Strength [MPa]", fontsize=11)
-    axes[0].set_title(f"(a) Naive Random Split (DATA LEAKAGE)\n$R^2 = {r2_naive:.3f}$, $\\mathrm{{RMSE}} = {rmse_naive:.1f}$ MPa", fontsize=11, fontweight="bold", color="#b91c1c")
+    axes[0].set_title(f"(a) Random 5-fold split\n$R^2 = {r2_naive:.3f}$, $\\mathrm{{RMSE}} = {rmse_naive:.1f}$ MPa", fontsize=11, fontweight="bold", color="#111827")
     axes[0].set_xlim(min_val, max_val)
     axes[0].set_ylim(min_val, max_val)
     axes[0].legend(loc="upper left")
@@ -48,7 +48,7 @@ def plot_leakage_parity_comparison(
     
     axes[1].set_xlabel("Measured Yield Strength [MPa]", fontsize=11)
     axes[1].set_ylabel("Predicted Yield Strength [MPa]", fontsize=11)
-    axes[1].set_title(f"(b) GroupKFold (HONEST GENERALIZATION)\n$R^2 = {r2_group:.3f}$, $\\mathrm{{RMSE}} = {rmse_group:.1f}$ MPa", fontsize=11, fontweight="bold", color="#0369a1")
+    axes[1].set_title(f"(b) GroupKFold by parameter set\n$R^2 = {r2_group:.3f}$, $\\mathrm{{RMSE}} = {rmse_group:.1f}$ MPa", fontsize=11, fontweight="bold", color="#111827")
     axes[1].set_xlim(min_val, max_val)
     axes[1].set_ylim(min_val, max_val)
     axes[1].legend(loc="upper left")

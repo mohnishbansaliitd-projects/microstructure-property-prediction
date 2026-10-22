@@ -20,14 +20,18 @@ AlSi10Mg LPBF processing-structure-property data from Zenodo: https://zenodo.org
 
 ## Results
 
-Source: the saved figure `outputs/figures/data_leakage_parity_comparison.png` (titles of the two panels, Random Forest). The repository has no saved log or table, so no other numbers are quoted.
+Source: `outputs/run_log.txt` (output of `python main.py` on the Zenodo dataset: 177 specimens, 60 parameter sets, 5 folds). Values are R2 / RMSE in MPa for yield strength.
 
-| Split | R2 | RMSE (MPa) |
+| Model | Random 5-fold split | GroupKFold by parameter set |
 |---|---|---|
-| Naive random split | 0.324 | 22.3 |
-| GroupKFold by parameter set | 0.415 | 20.8 |
+| Random Forest | 0.324 / 22.4 | 0.414 / 20.8 |
+| Gradient Boosting | 0.356 / 21.8 | 0.485 / 19.5 |
+| Ridge regression | 0.373 / 21.5 | 0.317 / 22.5 |
+| Physics baseline | 0.391 / 21.2 | |
 
-In this saved run the grouped split gives a higher R2 than the random split. The figure shows only Random Forest; Gradient Boosting, Ridge, the physics baseline and the bootstrap intervals are printed by `main.py` but not saved. `outputs/figures/alsi10mg_ved_vs_porosity_and_strength.png` plots yield strength and porosity against volumetric energy density.
+Bootstrap 95% CI for Random Forest R2: random split 0.318 [0.121, 0.487], GroupKFold 0.409 [0.242, 0.542].
+
+On this dataset the grouped split does not give lower scores than the random split for the tree models; the confidence intervals overlap, so the difference between split strategies is not significant at this sample size. The physics baseline is competitive with the ML models. `outputs/figures/data_leakage_parity_comparison.png` shows the Random Forest parity plots for both splits, and `outputs/figures/alsi10mg_ved_vs_porosity_and_strength.png` plots yield strength and porosity against volumetric energy density.
 
 ## Repository structure
 
@@ -42,10 +46,10 @@ outputs/figures/        saved figures
 
 ## How to run
 
-No requirements file is included. From the imports: numpy, pandas, scipy, scikit-learn, matplotlib, openpyxl (for `read_excel`) and pytest.
+Dependencies are listed in `requirements.txt`.
 
 ```
-pip install numpy pandas scipy scikit-learn matplotlib openpyxl pytest
+pip install -r requirements.txt
 python -m pytest tests
 python main.py
 ```
@@ -57,6 +61,6 @@ Download the Zenodo files `AlSi10Mg PSP feature table.xlsx` and `[FR] Mechanical
 - Only 60 parameter sets; per-set scores are sensitive to which sets land in each fold.
 - A single random seed and one grouped split; no repeated cross-validation.
 - The tests use the synthetic generator, not the real data, and assert only that the random-split R2 is not much lower than the grouped R2.
-- Next steps: save all model scores to a file, print the data source in use, add repeated grouped CV, and add a requirements file.
+- Next steps: save all model scores to a file, print the data source in use, add repeated grouped CV.
 
 Mohnish Bansal, B.Tech Materials Engineering, IIT Delhi

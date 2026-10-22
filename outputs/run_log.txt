@@ -1,0 +1,19 @@
+Project 4: microstructure-to-property prediction, leakage audit
+
+Loaded AlSi10Mg dataset: 177 specimens across 60 parameter sets
+  mean yield strength: 208.0 +/- 27.3 MPa
+  mean cell size: 1.00 um | mean porosity: 2.20%
+
+Model comparison (naive random split vs GroupKFold):
+Model                | Random split R2      | GroupKFold R2          | Physics R2  
+--------------------------------------------------------------------------------
+RandomForest         | 0.324                | 0.414                  | 0.391       
+GradientBoosting     | 0.356                | 0.485                  | 0.391       
+RidgeRegression      | 0.373                | 0.317                  | 0.391       
+
+Bootstrap 95% CI for Random Forest R2:
+  random split:     0.318  [95% CI: 0.121, 0.487]
+  GroupKFold split:  0.409  [95% CI: 0.242, 0.542]
+  difference (random - grouped): -0.092 R2
+
+Figures saved to outputs/figures

@@ -30,7 +30,7 @@ def run_full_pipeline():
     results = run_leakage_audit_experiment(df, n_splits=5)
 
     print("\nModel comparison (naive random split vs GroupKFold):")
-    print(f"{'Model':<20} | {'Naive R2 (leakage)':<20} | {'GroupKFold R2 (honest)':<22} | {'Physics R2':<12}")
+    print(f"{'Model':<20} | {'Random split R2':<20} | {'GroupKFold R2':<22} | {'Physics R2':<12}")
     print("-" * 80)
 
     for m in ["RandomForest", "GradientBoosting", "RidgeRegression"]:
@@ -45,9 +45,9 @@ def run_full_pipeline():
     mean_group, ci_low_group, ci_up_group = compute_r2_bootstrap_ci(group_rf["y_trues"], group_rf["y_preds"], n_bootstraps=1000)
 
     print("\nBootstrap 95% CI for Random Forest R2:")
-    print(f"  naive random split (with leakage): {mean_naive:.3f}  [95% CI: {ci_low_naive:.3f}, {ci_up_naive:.3f}]")
-    print(f"  GroupKFold split (leakage-free):    {mean_group:.3f}  [95% CI: {ci_low_group:.3f}, {ci_up_group:.3f}]")
-    print(f"  inflation: +{(mean_naive - mean_group):.3f} R2 points ({(mean_naive/mean_group - 1)*100:.1f}% artificial boost)")
+    print(f"  random split:     {mean_naive:.3f}  [95% CI: {ci_low_naive:.3f}, {ci_up_naive:.3f}]")
+    print(f"  GroupKFold split:  {mean_group:.3f}  [95% CI: {ci_low_group:.3f}, {ci_up_group:.3f}]")
+    print(f"  difference (random - grouped): {(mean_naive - mean_group):+.3f} R2")
 
     figures_dir = os.path.join(PROJECT_DIR, "outputs", "figures")
     os.makedirs(figures_dir, exist_ok=True)
